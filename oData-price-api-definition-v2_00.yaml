@@ -1,0 +1,391 @@
+swagger: '2.0'
+host: localhost
+basePath: /qs0/pricelist/v2
+schemes:
+  - https
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /pricing:
+    get:
+      description: This is description of priceing endpoints
+      operationId: getPricing
+      summary: Invoke function pricing
+      produces:
+        - application/json
+      parameters:
+        - description: Consumer Id
+          in: query
+          name: consumer
+          type: string
+        - description: Customer Id
+          in: query
+          name: customerId
+          type: string
+        - description: Product Id - Comma separated product ids
+          in: query
+          name: product
+          type: string
+        - description: Language Key
+          required: false
+          in: query
+          name: language
+          type: string
+        - description: Scenario Key
+          required: false
+          in: query
+          name: scenario
+          type: string
+        - description: 'Expand related entities, see [Expand]'
+          required: false
+          items:
+            type: string
+          in: query
+          name: $expand
+          type: array
+        - in: query
+          name: penName
+          type: string
+          description: PenName- comma separated names
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: Success
+          schema:
+            properties:
+              d:
+                properties:
+                  results:
+                    items:
+                      $ref: '#/definitions/RB22.V_PRLT_V2_SRV.pricing'
+                    type: array
+                type: object
+            type: object
+          examples:
+            example-1:
+              d:
+                results:
+                  - consumer: string
+                    scenario: string
+                    customerId: string
+                    language: string
+                    items:
+                      results:
+                        - uniqueItmId: string
+                          itmNumber: string
+                          product: string
+                          prodDesc: string
+                          unitOfMeasure: string
+                          isError: true
+                          netPrice: '0'
+                          taxAmount: '0'
+                          totalValue: '0'
+                          currency: string
+                          conditions:
+                            results:
+                              - conditionType: string
+                                name: string
+                                value: '0'
+                                conditionCurrency: string
+                                unit: string
+                                totalValue: '0'
+                                currency: string
+                                condIndicator: string
+                          explanation:
+                            results:
+                              - element: string
+                                value: '0'
+                                unitValue: '0'
+                                currency: string
+                                sign: string
+                                condIndicator: string
+                          components:
+                            results:
+                              - itmNumber: string
+                                hgLvlItm: string
+                                product: string
+                                prodDesc: string
+                                quantity: '0'
+                                unitOfMeasure: string
+                                netPrice: '0'
+                                taxAmount: '0'
+                                totalValue: '0'
+                                currency: string
+                                conditions:
+                                  results:
+                                    - conditionType: string
+                                      name: string
+                                      value: '0'
+                                      conditionCurrency: string
+                                      unit: string
+                                      totalValue: '0'
+                                      currency: string
+                                      condIndicator: string
+                                explanation:
+                                  results:
+                                    - element: string
+                                      value: '0'
+                                      unitValue: '0'
+                                      currency: string
+                                      sign: string
+                                      condIndicator: string
+        '201':
+          description: Created
+          schema:
+            type: object
+            properties: {}
+definitions:
+  RB22.V_PRLT_V2_SRV.components:
+    title: components
+    properties:
+      itmNumber:
+        title: Item
+        type: string
+      hgLvlItm:
+        title: Higher-lev.item
+        type: string
+      product:
+        title: Material
+        type: string
+      prodDesc:
+        title: Description
+        type: string
+      quantity:
+        title: Order Quantity
+        format: decimal
+        example: '0'
+        type: string
+      unitOfMeasure:
+        title: Sales Unit
+        type: string
+      netPrice:
+        title: Net Value
+        format: decimal
+        example: '0'
+        type: string
+      taxAmount:
+        title: Tax amount
+        format: decimal
+        example: '0'
+        type: string
+      totalValue:
+        title: Condition value
+        format: decimal
+        example: '0'
+        type: string
+      currency:
+        title: Currency
+        type: string
+      conditions:
+        properties:
+          results:
+            items:
+              $ref: '#/definitions/RB22.V_PRLT_V2_SRV.conditions'
+            type: array
+        type: object
+      explanation:
+        properties:
+          results:
+            items:
+              $ref: '#/definitions/RB22.V_PRLT_V2_SRV.explanation'
+            type: array
+        type: object
+    type: object
+  RB22.V_PRLT_V2_SRV.items:
+    title: items
+    properties:
+      uniqueItmId:
+        title: UUID
+        type: string
+      itmNumber:
+        title: Item
+        type: string
+      product:
+        title: Material
+        type: string
+      prodDesc:
+        title: Description
+        type: string
+      unitOfMeasure:
+        title: Sales Unit
+        type: string
+      isError:
+        title: Item with error
+        type: boolean
+      netPrice:
+        title: Net Value
+        format: decimal
+        example: '0'
+        type: string
+      taxAmount:
+        title: Tax amount
+        format: decimal
+        example: '0'
+        type: string
+      totalValue:
+        title: Condition value
+        format: decimal
+        example: '0'
+        type: string
+      currency:
+        title: Currency
+        type: string
+      conditions:
+        properties:
+          results:
+            items:
+              $ref: '#/definitions/RB22.V_PRLT_V2_SRV.conditions'
+            type: array
+        type: object
+      explanation:
+        properties:
+          results:
+            items:
+              $ref: '#/definitions/RB22.V_PRLT_V2_SRV.explanation'
+            type: array
+        type: object
+      components:
+        properties:
+          results:
+            items:
+              $ref: '#/definitions/RB22.V_PRLT_V2_SRV.components'
+            type: array
+        type: object
+    type: object
+  RB22.V_PRLT_V2_SRV.conditions:
+    title: conditions
+    properties:
+      conditionType:
+        title: Condition type
+        type: string
+      name:
+        title: Name
+        type: string
+      value:
+        title: Amount
+        format: decimal
+        example: '0'
+        type: string
+      conditionCurrency:
+        title: Currency
+        type: string
+      unit:
+        title: Unit of measure
+        type: string
+      totalValue:
+        title: Condition value
+        format: decimal
+        example: '0'
+        type: string
+      currency:
+        title: Currency
+        type: string
+      condIndicator:
+        title: Pricing type
+        type: string
+    type: object
+  Error:
+    required:
+      - error
+    properties:
+      error:
+        required:
+          - code
+          - message
+        properties:
+          code:
+            type: string
+          message:
+            required:
+              - lang
+              - value
+            properties:
+              lang:
+                type: string
+              value:
+                type: string
+            type: object
+          innererror:
+            description: The structure of this object is service-specific
+            type: object
+        type: object
+    type: object
+  RB22.V_PRLT_V2_SRV.pricing:
+    title: pricing
+    properties:
+      consumer:
+        title: Consumer
+        type: string
+      scenario:
+        title: Scenario
+        type: string
+      customerId:
+        title: Customer
+        type: string
+      language:
+        title: Language
+        type: string
+      items:
+        properties:
+          results:
+            items:
+              $ref: '#/definitions/RB22.V_PRLT_V2_SRV.items'
+            type: array
+        type: object
+    type: object
+  RB22.V_PRLT_V2_SRV.explanation:
+    title: explanation
+    properties:
+      element:
+        title: Pricing element
+        type: string
+      value:
+        title: Condition value
+        format: decimal
+        example: '0'
+        type: string
+      unitValue:
+        title: Condition value
+        format: decimal
+        example: '0'
+        type: string
+      currency:
+        title: Currency Key
+        type: string
+      sign:
+        title: Sign
+        type: string
+      condIndicator:
+        title: Pricing type
+        type: string
+    type: object
+securityDefinitions:
+  API Key:
+    type: apiKey
+    description: API Key
+    name: KeyId
+    in: header
+info:
+  title: RBLA_QS0_YCOM_PRICELIST2
+  description: 'This service is located at [http://localhost/api/](http://localhost/api/)'
+  version: '1.0'
+x-axway:
+  corsEnabled: true
+  basePaths:
+    - ''
+    - ''
+  serviceType: rest
+  deprecated: false
+  tags: {}
+  availableSDK:
+    ios-swift: /discovery/sdk/c8aba68c-e26c-4ca1-8d52-084f42ed4ffa/ios-swift
+    titanium: /discovery/sdk/c8aba68c-e26c-4ca1-8d52-084f42ed4ffa/titanium
+    android: /discovery/sdk/c8aba68c-e26c-4ca1-8d52-084f42ed4ffa/android
+    nodejs: /discovery/sdk/c8aba68c-e26c-4ca1-8d52-084f42ed4ffa/nodejs

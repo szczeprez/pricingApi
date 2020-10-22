@@ -1,0 +1,1861 @@
+openapi: 3.0.0
+info:
+  title: api_for_mobile
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /orderSimulated:
+    parameters: []
+    get:
+      summary: call order simulation
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  orderSimulated:
+                    type: object
+                    properties:
+                      requestId:
+                        type: string
+                        minLength: 1
+                      orderHeader:
+                        type: object
+                        properties:
+                          customerId:
+                            type: number
+                          purchaseOrderNo:
+                            type: string
+                            minLength: 1
+                          currency:
+                            type: string
+                            minLength: 1
+                          requestedDate:
+                            type: string
+                            minLength: 1
+                          paymentTerm:
+                            type: string
+                            minLength: 1
+                          completeDelivery:
+                            type: boolean
+                          partners:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required:
+                                - function
+                              properties:
+                                function:
+                                  type: string
+                                  minLength: 1
+                                partner:
+                                  type: object
+                                  properties:
+                                    partnerId:
+                                      type: number
+                                  required:
+                                    - partnerId
+                          conditions:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required:
+                                - conditionType
+                                - indicator
+                                - value
+                                - unit
+                                - scale
+                                - scaleUnit
+                                - totalValue
+                                - currency
+                              properties:
+                                conditionType:
+                                  type: string
+                                  minLength: 1
+                                indicator:
+                                  type: string
+                                  minLength: 1
+                                value:
+                                  type: number
+                                unit:
+                                  type: string
+                                  minLength: 1
+                                scale:
+                                  type: number
+                                scaleUnit:
+                                  type: string
+                                  minLength: 1
+                                totalValue:
+                                  type: number
+                                currency:
+                                  type: string
+                                  minLength: 1
+                          additionalData:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required:
+                                - key
+                                - value
+                              properties:
+                                key:
+                                  type: string
+                                  minLength: 1
+                                value:
+                                  type: string
+                                  minLength: 1
+                        required:
+                          - customerId
+                          - purchaseOrderNo
+                          - currency
+                          - requestedDate
+                          - paymentTerm
+                          - completeDelivery
+                          - partners
+                          - conditions
+                          - additionalData
+                      confirmedAsRequested:
+                        type: boolean
+                      pricingSummary:
+                        type: object
+                        properties:
+                          basePrice:
+                            type: number
+                          rebates:
+                            type: number
+                          surcharges:
+                            type: number
+                          totalPrice:
+                            type: number
+                          freightcost:
+                            type: number
+                          VAT:
+                            type: number
+                          totalTax:
+                            type: number
+                          amount:
+                            type: number
+                        required:
+                          - basePrice
+                          - rebates
+                          - surcharges
+                          - totalPrice
+                          - freightcost
+                          - VAT
+                          - totalTax
+                          - amount
+                      pricingExplanation:
+                        type: object
+                        properties:
+                          pricingExplanationLines:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required:
+                                - element
+                                - value
+                                - unitValue
+                                - currency
+                                - sign
+                                - indicator
+                              properties:
+                                element:
+                                  type: string
+                                  minLength: 1
+                                value:
+                                  type: number
+                                unitValue:
+                                  type: number
+                                currency:
+                                  type: string
+                                  minLength: 1
+                                sign:
+                                  type: string
+                                  minLength: 1
+                                indicator:
+                                  type: string
+                                  minLength: 1
+                        required:
+                          - pricingExplanationLines
+                      shipmentDimension:
+                        type: object
+                        properties:
+                          totalWeight:
+                            type: string
+                            minLength: 1
+                          unitOfWeight:
+                            type: string
+                            minLength: 1
+                          totalVolume:
+                            type: string
+                            minLength: 1
+                          unitOfVolume:
+                            type: string
+                            minLength: 1
+                        required:
+                          - totalWeight
+                          - unitOfWeight
+                          - totalVolume
+                          - unitOfVolume
+                      orderItems:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - itemNo
+                            - confirmedAsRequested
+                            - acceptedQuantity
+                            - confirmedQuantity
+                            - productRequested
+                          properties:
+                            itemNo:
+                              type: string
+                              minLength: 1
+                            confirmedAsRequested:
+                              type: boolean
+                            acceptedQuantity:
+                              type: number
+                            confirmedQuantity:
+                              type: number
+                            pricingSummary:
+                              type: object
+                              properties:
+                                basePrice:
+                                  type: number
+                                rebates:
+                                  type: number
+                                surcharges:
+                                  type: number
+                                totalPrice:
+                                  type: number
+                                freightcost:
+                                  type: number
+                                VAT:
+                                  type: number
+                                totalTax:
+                                  type: number
+                                amount:
+                                  type: number
+                              required:
+                                - basePrice
+                                - rebates
+                                - surcharges
+                                - totalPrice
+                                - freightcost
+                                - VAT
+                                - totalTax
+                                - amount
+                            pricingExplanation:
+                              type: object
+                              properties:
+                                pricingExplanationLines:
+                                  type: array
+                                  uniqueItems: true
+                                  minItems: 1
+                                  items:
+                                    required:
+                                      - element
+                                      - value
+                                      - unitValue
+                                      - currency
+                                      - sign
+                                      - indicator
+                                    properties:
+                                      element:
+                                        type: string
+                                        minLength: 1
+                                      value:
+                                        type: number
+                                      unitValue:
+                                        type: number
+                                      currency:
+                                        type: string
+                                        minLength: 1
+                                      sign:
+                                        type: string
+                                        minLength: 1
+                                      indicator:
+                                        type: string
+                                        minLength: 1
+                              required:
+                                - pricingExplanationLines
+                            shipmentDimension:
+                              type: object
+                              properties:
+                                totalWeight:
+                                  type: string
+                                  minLength: 1
+                                unitOfWeight:
+                                  type: string
+                                  minLength: 1
+                                totalVolume:
+                                  type: string
+                                  minLength: 1
+                                unitOfVolume:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - totalWeight
+                                - unitOfWeight
+                                - totalVolume
+                                - unitOfVolume
+                            orderItem:
+                              type: object
+                              properties:
+                                productId:
+                                  type: string
+                                  minLength: 1
+                                uniqueItemId:
+                                  type: number
+                                materialDescription:
+                                  type: string
+                                  minLength: 1
+                                requestedQuantity:
+                                  type: number
+                                quantityUnit:
+                                  type: string
+                                  minLength: 1
+                                conditions:
+                                  type: array
+                                  uniqueItems: true
+                                  minItems: 1
+                                  items:
+                                    required:
+                                      - conditionType
+                                      - indicator
+                                      - value
+                                      - conditionCurrency
+                                      - unit
+                                      - scale
+                                      - scaleUnit
+                                      - totalValue
+                                      - currency
+                                    properties:
+                                      conditionType:
+                                        type: string
+                                        minLength: 1
+                                      indicator:
+                                        type: string
+                                        minLength: 1
+                                      value:
+                                        type: number
+                                      conditionCurrency:
+                                        type: string
+                                        minLength: 1
+                                      unit:
+                                        type: string
+                                        minLength: 1
+                                      scale:
+                                        type: number
+                                      scaleUnit:
+                                        type: string
+                                        minLength: 1
+                                      totalValue:
+                                        type: number
+                                      currency:
+                                        type: string
+                                        minLength: 1
+                                additionalData:
+                                  type: array
+                                  uniqueItems: true
+                                  minItems: 1
+                                  items:
+                                    required:
+                                      - key
+                                      - value
+                                    properties:
+                                      key:
+                                        type: string
+                                        minLength: 1
+                                      value:
+                                        type: string
+                                        minLength: 1
+                              required:
+                                - productId
+                                - uniqueItemId
+                                - materialDescription
+                                - requestedQuantity
+                                - quantityUnit
+                                - conditions
+                                - additionalData
+                            productRequested:
+                              type: string
+                              minLength: 1
+                      errorMessages:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - code
+                            - severity
+                            - text
+                            - isExternalCode
+                          properties:
+                            code:
+                              type: number
+                            severity:
+                              type: string
+                              minLength: 1
+                            text:
+                              type: string
+                              minLength: 1
+                            isExternalCode:
+                              type: boolean
+                    required:
+                      - requestId
+                      - orderHeader
+                      - confirmedAsRequested
+                      - pricingSummary
+                      - pricingExplanation
+                      - shipmentDimension
+                      - orderItems
+                      - errorMessages
+                required:
+                  - orderSimulated
+              examples:
+                orderSimulated-1:
+                  value:
+                    orderSimulated:
+                      requestId: '00306022'
+                      orderHeader:
+                        customerId: 8867000
+                        purchaseOrderNo: '00306000'
+                        currency: BRL
+                        requestedDate: '2019-11-28'
+                        paymentTerm: BRF0
+                        completeDelivery: false
+                        partners:
+                          - function: SoldToParty
+                            partner:
+                              partnerId: 8867000
+                          - function: BillToParty
+                            partner:
+                              partnerId: 8867000
+                          - function: Payer
+                            partner:
+                              partnerId: 8867000
+                          - function: ShipToParty
+                            partner:
+                              partnerId: 8867000
+                          - function: X0
+                            partner:
+                              partnerId: 90007491
+                          - function: X1
+                            partner:
+                              partnerId: 90005831
+                          - function: X3
+                            partner:
+                              partnerId: 90013324
+                          - function: X4
+                            partner:
+                              partnerId: 90000174
+                          - function: X5
+                            partner:
+                              partnerId: 90009729
+                          - function: XS
+                            partner:
+                              partnerId: 90004428
+                        conditions:
+                          - conditionType: ZB02
+                            indicator: A
+                            value: 0
+                            unit: PCE
+                            scale: 1
+                            scaleUnit: PCE
+                            totalValue: 31841
+                            currency: BRL
+                          - conditionType: ZB66
+                            indicator: M
+                            value: 0
+                            totalValue: -13691.63
+                            currency: BRL
+                          - conditionType: ZBCP
+                            indicator: M
+                            value: 0
+                            totalValue: -362.99
+                            currency: BRL
+                          - conditionType: ZBB5
+                            indicator: M
+                            value: 0
+                            totalValue: -2134.37
+                            currency: BRL
+                          - conditionType: ZBAW
+                            indicator: M
+                            value: 0
+                            currency: BRL
+                          - conditionType: ZBAY
+                            indicator: M
+                            value: 0
+                            currency: BRL
+                          - conditionType: ZBAS
+                            indicator: M
+                            value: 0
+                            currency: BRL
+                          - conditionType: ZBD2
+                            indicator: M
+                            value: 0
+                            currency: BRL
+                          - conditionType: ZBD4
+                            indicator: M
+                            value: 0
+                            currency: BRL
+                          - conditionType: ZBD3
+                            indicator: M
+                            value: 0
+                            currency: BRL
+                          - conditionType: IBRX
+                            indicator: 'N'
+                            value: 0
+                            totalValue: 15652
+                            currency: BRL
+                          - conditionType: IPI3
+                            indicator: O
+                            value: 0
+                            totalValue: 1252.16
+                            currency: BRL
+                          - conditionType: ICM3
+                            indicator: P
+                            value: 0
+                            totalValue: 1377.41
+                            currency: BRL
+                          - conditionType: ICSP
+                            indicator: Q
+                            value: 0
+                            currency: BRL
+                          - conditionType: ICS3
+                            indicator: R
+                            value: 0
+                            totalValue: 839.12
+                            currency: BRL
+                          - conditionType: ICFP
+                            indicator: S
+                            value: 0
+                            currency: BRL
+                          - conditionType: ZB11
+                            indicator: U
+                            value: 0
+                            totalValue: 17743.28
+                            currency: BRL
+                        additionalData:
+                          - key: materialGroups
+                            value: '{ "materialGroups":[{"matGroup":"BUY0035991791","fields":[{"field":"MVGR4","value":"VBS"}],"materials":[{"material":"F0129004JU000","unitOfMeasure":"ST","getException":""}]}]}'
+                      confirmedAsRequested: false
+                      pricingSummary:
+                        basePrice: 31841
+                        rebates: -16188.99
+                        surcharges: 0
+                        totalPrice: 15652
+                        freightcost: 0
+                        VAT: 2091.28
+                        totalTax: 3468.69
+                        amount: 17743.28
+                      pricingExplanation:
+                        pricingExplanationLines:
+                          - element: LIST_PRICE
+                            value: 31841
+                            unitValue: 0
+                            currency: BRL
+                            sign: '='
+                            indicator: A
+                          - element: DISCOUNT_BASE
+                            value: -13691.63
+                            unitValue: 0
+                            currency: BRL
+                            sign: '='
+                            indicator: B
+                          - element: DISCOUNT_EXCLUSIVE
+                            value: -362.99
+                            unitValue: 0
+                            currency: BRL
+                            sign: '&'
+                            indicator: C
+                          - element: DISCOUNT_PROMO
+                            value: -2134.37
+                            unitValue: 0
+                            currency: BRL
+                            sign: '&'
+                            indicator: E
+                          - element: TOTAL_DISCOUNT
+                            value: -16188.99
+                            unitValue: 0
+                            currency: BRL
+                            sign: '&'
+                            indicator: M
+                          - element: NET_PRICE
+                            value: 15652
+                            unitValue: 0
+                            currency: BRL
+                            sign: '='
+                            indicator: 'N'
+                          - element: IPI
+                            value: 1252.16
+                            unitValue: 0
+                            currency: BRL
+                            sign: +
+                            indicator: O
+                          - element: ICMS
+                            value: 1377.41
+                            unitValue: 0
+                            currency: BRL
+                            sign: +
+                            indicator: P
+                          - element: ICMS_ST
+                            value: 839.12
+                            unitValue: 0
+                            currency: BRL
+                            sign: +
+                            indicator: R
+                          - element: TOTAL_TAXES
+                            value: 3468.69
+                            unitValue: 0
+                            currency: BRL
+                            sign: '&'
+                            indicator: T
+                          - element: INVOICE_PRICE
+                            value: 17743.28
+                            unitValue: 0
+                            currency: BRL
+                            sign: '='
+                            indicator: U
+                          - element: MVA
+                            value: 839.12
+                            unitValue: 0
+                            currency: BRL
+                            sign: '='
+                            indicator: V
+                          - element: '%ST'
+                            value: 839.12
+                            unitValue: 0
+                            currency: BRL
+                            sign: '='
+                            indicator: X
+                      shipmentDimension:
+                        totalWeight: '277.000 '
+                        unitOfWeight: KGM
+                        totalVolume: '5172.800 '
+                        unitOfVolume: CMQ
+                      orderItems:
+                        - itemNo: '000001'
+                          confirmedAsRequested: false
+                          acceptedQuantity: 100
+                          confirmedQuantity: 0
+                          pricingSummary:
+                            basePrice: 31841
+                            rebates: -16188.99
+                            surcharges: 0
+                            totalPrice: 15652
+                            freightcost: 0
+                            VAT: 2091.28
+                            totalTax: 3468.69
+                            amount: 17743.28
+                          pricingExplanation:
+                            pricingExplanationLines:
+                              - element: LIST_PRICE
+                                value: 31841
+                                unitValue: 318.41
+                                currency: BRL
+                                sign: '='
+                                indicator: A
+                              - element: DISCOUNT_BASE
+                                value: -13691.63
+                                unitValue: -43
+                                currency: BRL
+                                sign: '='
+                                indicator: B
+                              - element: DISCOUNT_EXCLUSIVE
+                                value: -362.99
+                                unitValue: -3.63
+                                currency: BRL
+                                sign: '&'
+                                indicator: C
+                              - element: DISCOUNT_PROMO
+                                value: -2134.37
+                                unitValue: -21.344
+                                currency: BRL
+                                sign: '&'
+                                indicator: E
+                              - element: TOTAL_DISCOUNT
+                                value: -16188.99
+                                unitValue: -161.89
+                                currency: BRL
+                                sign: '&'
+                                indicator: M
+                              - element: NET_PRICE
+                                value: 15652
+                                unitValue: 100
+                                currency: BRL
+                                sign: '='
+                                indicator: 'N'
+                              - element: IPI
+                                value: 1252.16
+                                unitValue: 8
+                                currency: BRL
+                                sign: +
+                                indicator: O
+                              - element: ICMS
+                                value: 1377.41
+                                unitValue: 18
+                                currency: BRL
+                                sign: +
+                                indicator: P
+                              - element: ICMS_ST
+                                value: 839.12
+                                unitValue: 18
+                                currency: BRL
+                                sign: +
+                                indicator: R
+                              - element: TOTAL_TAXES
+                                value: 3468.69
+                                unitValue: 34.687
+                                currency: BRL
+                                sign: '&'
+                                indicator: T
+                              - element: INVOICE_PRICE
+                                value: 17743.28
+                                unitValue: 100
+                                currency: BRL
+                                sign: '='
+                                indicator: U
+                              - element: MVA
+                                value: 839.12
+                                unitValue: 49
+                                currency: BRL
+                                sign: '='
+                                indicator: V
+                              - element: '%ST'
+                                value: 839.12
+                                unitValue: 4.964
+                                currency: BRL
+                                sign: '='
+                                indicator: X
+                          shipmentDimension:
+                            totalWeight: '277.000 '
+                            unitOfWeight: KGM
+                            totalVolume: '5172.800 '
+                            unitOfVolume: CMQ
+                          orderItem:
+                            productId: F012.900.4JU-000
+                            uniqueItemId: 0
+                            materialDescription: ESMERILHADEIRA 220V 9004 +2discos+Bolsa
+                            requestedQuantity: 100
+                            quantityUnit: PCE
+                            conditions:
+                              - conditionType: ZB02
+                                indicator: A
+                                value: 318.41
+                                conditionCurrency: BRL
+                                unit: PCE
+                                scale: 1
+                                scaleUnit: PCE
+                                totalValue: 31841
+                                currency: BRL
+                              - conditionType: ZB66
+                                indicator: M
+                                value: -43
+                                conditionCurrency: PCT
+                                totalValue: -13691.63
+                                currency: BRL
+                              - conditionType: ZBCP
+                                indicator: M
+                                value: -2
+                                conditionCurrency: PCT
+                                totalValue: -362.99
+                                currency: BRL
+                              - conditionType: ZBB5
+                                indicator: M
+                                value: -12
+                                conditionCurrency: PCT
+                                totalValue: -2134.37
+                                currency: BRL
+                              - conditionType: ZBAW
+                                indicator: M
+                                value: 0
+                                conditionCurrency: PCT
+                                currency: BRL
+                              - conditionType: ZBAY
+                                indicator: M
+                                value: 0
+                                conditionCurrency: PCT
+                                currency: BRL
+                              - conditionType: ZBAS
+                                indicator: M
+                                value: 0
+                                conditionCurrency: BRL
+                                currency: BRL
+                              - conditionType: DiscountController
+                                indicator: M
+                                value: 0
+                                conditionCurrency: PCT
+                                currency: BRL
+                              - conditionType: DiscountManager
+                                indicator: M
+                                value: 0
+                                conditionCurrency: PCT
+                                currency: BRL
+                              - conditionType: DiscountCoordinator
+                                indicator: M
+                                value: 0
+                                conditionCurrency: PCT
+                                currency: BRL
+                              - conditionType: IBRX
+                                indicator: 'N'
+                                value: 100
+                                conditionCurrency: PCT
+                                totalValue: 15652
+                                currency: BRL
+                              - conditionType: IPI3
+                                indicator: O
+                                value: 8
+                                conditionCurrency: PCT
+                                totalValue: 1252.16
+                                currency: BRL
+                              - conditionType: ICM3
+                                indicator: P
+                                value: 18
+                                conditionCurrency: PCT
+                                totalValue: 1377.41
+                                currency: BRL
+                              - conditionType: ICSP
+                                indicator: Q
+                                value: 0
+                                conditionCurrency: PCT
+                                currency: BRL
+                              - conditionType: ICS3
+                                indicator: R
+                                value: 18
+                                conditionCurrency: PCT
+                                totalValue: 839.12
+                                currency: BRL
+                              - conditionType: ICFP
+                                indicator: S
+                                value: 0
+                                conditionCurrency: PCT
+                                currency: BRL
+                              - conditionType: ZB11
+                                indicator: U
+                                value: 100
+                                conditionCurrency: PCT
+                                totalValue: 17743.28
+                                currency: BRL
+                              - conditionType: MVA
+                                indicator: V
+                                value: 49
+                                conditionCurrency: PCT
+                                totalValue: 839.12
+                                currency: BRL
+                              - conditionType: '%ST'
+                                indicator: X
+                                value: 4.964
+                                conditionCurrency: PCT
+                                totalValue: 839.12
+                                currency: BRL
+                            additionalData:
+                              - key: plantID
+                                value: W275
+                              - key: promotions
+                                value: '{ "promotions":[{"storeId":"PTBR_STORE","customer":"","material":"F012.900.4JU-000","promoNo":"35991791","validFrom":"2019-09-23","validTo":"9999-12-31","text":"ZBB5 -Desc. Escala em Qtd.","conditionType":"ZBB5","currency":"","get":[{"promoNo":"35991791","getType":"M","bonusType":"%","material":"F012.900.4JU-000","matGroup":"","quantity":1.000,"quantityUom":"PCE","value":-8.000,"valueCurrency":"","koein":"","scaleBasis":"C","granted":false,"buy":[{"promoNo":"35991791","buyType":"G","material":"","matGroup":"BUY0035991791","quantityFrom":10.000,"quantityTo":19.000,"quantityUom":"PCE","valueFrom":0,"valueTo":0,"valueCurrency":""}]},{"promoNo":"35991791","getType":"M","bonusType":"%","material":"F012.900.4JU-000","matGroup":"","quantity":1.000,"quantityUom":"PCE","value":-12.000,"valueCurrency":"","koein":"","scaleBasis":"C","granted":true,"buy":[{"promoNo":"35991791","buyType":"G","material":"","matGroup":"BUY0035991791","quantityFrom":20.000,"quantityTo":999999999999.000,"quantityUom":"PCE","valueFrom":0,"valueTo":0,"valueCurrency":""}]}]}]}'
+                          productRequested: F012.900.4JU-000
+                      errorMessages:
+                        - code: 1001
+                          severity: W
+                          text: Credit block
+                          isExternalCode: true
+      operationId: get-mobiles-companyName
+      description: get order simulate object api response
+  /api:
+    parameters: []
+    get:
+      summary: call simple mobile endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MobileResponse'
+              examples:
+                example-1:
+                  value:
+                    title: The Basics - Networking
+                    description: Your app fetched this from a remote endpoint!
+                    movies:
+                      - id: '1'
+                        title: Star Wars
+                        releaseYear: '1977'
+                      - id: '2'
+                        title: Back to the Future
+                        releaseYear: '1985'
+                      - id: '3'
+                        title: The Matrix
+                        releaseYear: '1999'
+                      - id: '4'
+                        title: Inception
+                        releaseYear: '2010'
+                      - id: '5'
+                        title: Interstellar
+                        releaseYear: '2014'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                example-1:
+                  value: {}
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    type: string
+                  message:
+                    type: string
+      operationId: get-api-companyName
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: id
+        - schema:
+            type: string
+          in: query
+          name: name
+      description: get api mobile simple endpoint
+components:
+  schemas:
+    MobileResponse:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          title: string
+          description: string
+          mobile:
+            - id: string
+              title: string
+              releaseYear: string
+          operator: string
+      properties:
+        title:
+          type: string
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+        mobile:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              title:
+                type: string
+                minLength: 1
+              releaseYear:
+                type: string
+                minLength: 1
+              testEOne:
+                type: string
+            required:
+              - id
+              - title
+              - releaseYear
+        operator:
+          type: string
+      required:
+        - title
+        - description
+        - mobile
+    Error:
+      title: Error
+      type: object
+      properties:
+        id:
+          type: string
+        errorMessage:
+          type: string
+      x-examples:
+        example-1:
+          id: '1'
+          errorMessage: this is not available page
+    orderSimulated:
+      description: ''
+      type: object
+      properties:
+        orderSimulated:
+          type: object
+          properties:
+            requestId:
+              type: string
+              minLength: 1
+            orderHeader:
+              type: object
+              properties:
+                customerId:
+                  type: number
+                purchaseOrderNo:
+                  type: string
+                  minLength: 1
+                currency:
+                  type: string
+                  minLength: 1
+                requestedDate:
+                  type: string
+                  minLength: 1
+                paymentTerm:
+                  type: string
+                  minLength: 1
+                completeDelivery:
+                  type: boolean
+                partners:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  items:
+                    required:
+                      - function
+                    properties:
+                      function:
+                        type: string
+                        minLength: 1
+                      partner:
+                        type: object
+                        properties:
+                          partnerId:
+                            type: number
+                        required:
+                          - partnerId
+                conditions:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  items:
+                    required:
+                      - conditionType
+                      - indicator
+                      - value
+                      - unit
+                      - scale
+                      - scaleUnit
+                      - totalValue
+                      - currency
+                    properties:
+                      conditionType:
+                        type: string
+                        minLength: 1
+                      indicator:
+                        type: string
+                        minLength: 1
+                      value:
+                        type: number
+                      unit:
+                        type: string
+                        minLength: 1
+                      scale:
+                        type: number
+                      scaleUnit:
+                        type: string
+                        minLength: 1
+                      totalValue:
+                        type: number
+                      currency:
+                        type: string
+                        minLength: 1
+                additionalData:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  items:
+                    required:
+                      - key
+                      - value
+                    properties:
+                      key:
+                        type: string
+                        minLength: 1
+                      value:
+                        type: string
+                        minLength: 1
+              required:
+                - customerId
+                - purchaseOrderNo
+                - currency
+                - requestedDate
+                - paymentTerm
+                - completeDelivery
+                - partners
+                - conditions
+                - additionalData
+            confirmedAsRequested:
+              type: boolean
+            pricingSummary:
+              type: object
+              properties:
+                basePrice:
+                  type: number
+                rebates:
+                  type: number
+                surcharges:
+                  type: number
+                totalPrice:
+                  type: number
+                freightcost:
+                  type: number
+                VAT:
+                  type: number
+                totalTax:
+                  type: number
+                amount:
+                  type: number
+              required:
+                - basePrice
+                - rebates
+                - surcharges
+                - totalPrice
+                - freightcost
+                - VAT
+                - totalTax
+                - amount
+            pricingExplanation:
+              type: object
+              properties:
+                pricingExplanationLines:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  items:
+                    required:
+                      - element
+                      - value
+                      - unitValue
+                      - currency
+                      - sign
+                      - indicator
+                    properties:
+                      element:
+                        type: string
+                        minLength: 1
+                      value:
+                        type: number
+                      unitValue:
+                        type: number
+                      currency:
+                        type: string
+                        minLength: 1
+                      sign:
+                        type: string
+                        minLength: 1
+                      indicator:
+                        type: string
+                        minLength: 1
+              required:
+                - pricingExplanationLines
+            shipmentDimension:
+              type: object
+              properties:
+                totalWeight:
+                  type: string
+                  minLength: 1
+                unitOfWeight:
+                  type: string
+                  minLength: 1
+                totalVolume:
+                  type: string
+                  minLength: 1
+                unitOfVolume:
+                  type: string
+                  minLength: 1
+              required:
+                - totalWeight
+                - unitOfWeight
+                - totalVolume
+                - unitOfVolume
+            orderItems:
+              type: array
+              uniqueItems: true
+              minItems: 1
+              items:
+                required:
+                  - itemNo
+                  - confirmedAsRequested
+                  - acceptedQuantity
+                  - confirmedQuantity
+                  - productRequested
+                properties:
+                  itemNo:
+                    type: string
+                    minLength: 1
+                  confirmedAsRequested:
+                    type: boolean
+                  acceptedQuantity:
+                    type: number
+                  confirmedQuantity:
+                    type: number
+                  pricingSummary:
+                    type: object
+                    properties:
+                      basePrice:
+                        type: number
+                      rebates:
+                        type: number
+                      surcharges:
+                        type: number
+                      totalPrice:
+                        type: number
+                      freightcost:
+                        type: number
+                      VAT:
+                        type: number
+                      totalTax:
+                        type: number
+                      amount:
+                        type: number
+                    required:
+                      - basePrice
+                      - rebates
+                      - surcharges
+                      - totalPrice
+                      - freightcost
+                      - VAT
+                      - totalTax
+                      - amount
+                  pricingExplanation:
+                    type: object
+                    properties:
+                      pricingExplanationLines:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - element
+                            - value
+                            - unitValue
+                            - currency
+                            - sign
+                            - indicator
+                          properties:
+                            element:
+                              type: string
+                              minLength: 1
+                            value:
+                              type: number
+                            unitValue:
+                              type: number
+                            currency:
+                              type: string
+                              minLength: 1
+                            sign:
+                              type: string
+                              minLength: 1
+                            indicator:
+                              type: string
+                              minLength: 1
+                    required:
+                      - pricingExplanationLines
+                  shipmentDimension:
+                    type: object
+                    properties:
+                      totalWeight:
+                        type: string
+                        minLength: 1
+                      unitOfWeight:
+                        type: string
+                        minLength: 1
+                      totalVolume:
+                        type: string
+                        minLength: 1
+                      unitOfVolume:
+                        type: string
+                        minLength: 1
+                    required:
+                      - totalWeight
+                      - unitOfWeight
+                      - totalVolume
+                      - unitOfVolume
+                  orderItem:
+                    type: object
+                    properties:
+                      productId:
+                        type: string
+                        minLength: 1
+                      uniqueItemId:
+                        type: number
+                      materialDescription:
+                        type: string
+                        minLength: 1
+                      requestedQuantity:
+                        type: number
+                      quantityUnit:
+                        type: string
+                        minLength: 1
+                      conditions:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - conditionType
+                            - indicator
+                            - value
+                            - conditionCurrency
+                            - unit
+                            - scale
+                            - scaleUnit
+                            - totalValue
+                            - currency
+                          properties:
+                            conditionType:
+                              type: string
+                              minLength: 1
+                            indicator:
+                              type: string
+                              minLength: 1
+                            value:
+                              type: number
+                            conditionCurrency:
+                              type: string
+                              minLength: 1
+                            unit:
+                              type: string
+                              minLength: 1
+                            scale:
+                              type: number
+                            scaleUnit:
+                              type: string
+                              minLength: 1
+                            totalValue:
+                              type: number
+                            currency:
+                              type: string
+                              minLength: 1
+                      additionalData:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          required:
+                            - key
+                            - value
+                          properties:
+                            key:
+                              type: string
+                              minLength: 1
+                            value:
+                              type: string
+                              minLength: 1
+                    required:
+                      - productId
+                      - uniqueItemId
+                      - materialDescription
+                      - requestedQuantity
+                      - quantityUnit
+                      - conditions
+                      - additionalData
+                  productRequested:
+                    type: string
+                    minLength: 1
+            errorMessages:
+              type: array
+              uniqueItems: true
+              minItems: 1
+              items:
+                required:
+                  - code
+                  - severity
+                  - text
+                  - isExternalCode
+                properties:
+                  code:
+                    type: number
+                  severity:
+                    type: string
+                    minLength: 1
+                  text:
+                    type: string
+                    minLength: 1
+                  isExternalCode:
+                    type: boolean
+          required:
+            - requestId
+            - orderHeader
+            - confirmedAsRequested
+            - pricingSummary
+            - pricingExplanation
+            - shipmentDimension
+            - orderItems
+            - errorMessages
+      required:
+        - orderSimulated
+      x-examples:
+        orderSimulated-example-1:
+          orderSimulated:
+            requestId: '00306022'
+            orderHeader:
+              customerId: 8867000
+              purchaseOrderNo: '00306000'
+              currency: BRL
+              requestedDate: '2019-11-28'
+              paymentTerm: BRF0
+              completeDelivery: false
+              partners:
+                - function: SoldToParty
+                  partner:
+                    partnerId: 8867000
+                - function: BillToParty
+                  partner:
+                    partnerId: 8867000
+                - function: Payer
+                  partner:
+                    partnerId: 8867000
+                - function: ShipToParty
+                  partner:
+                    partnerId: 8867000
+                - function: X0
+                  partner:
+                    partnerId: 90007491
+                - function: X1
+                  partner:
+                    partnerId: 90005831
+                - function: X3
+                  partner:
+                    partnerId: 90013324
+                - function: X4
+                  partner:
+                    partnerId: 90000174
+                - function: X5
+                  partner:
+                    partnerId: 90009729
+                - function: XS
+                  partner:
+                    partnerId: 90004428
+              conditions:
+                - conditionType: ZB02
+                  indicator: A
+                  value: 0
+                  unit: PCE
+                  scale: 1
+                  scaleUnit: PCE
+                  totalValue: 31841
+                  currency: BRL
+                - conditionType: ZB66
+                  indicator: M
+                  value: 0
+                  totalValue: -13691.63
+                  currency: BRL
+                - conditionType: ZBCP
+                  indicator: M
+                  value: 0
+                  totalValue: -362.99
+                  currency: BRL
+                - conditionType: ZBB5
+                  indicator: M
+                  value: 0
+                  totalValue: -2134.37
+                  currency: BRL
+                - conditionType: ZBAW
+                  indicator: M
+                  value: 0
+                  currency: BRL
+                - conditionType: ZBAY
+                  indicator: M
+                  value: 0
+                  currency: BRL
+                - conditionType: ZBAS
+                  indicator: M
+                  value: 0
+                  currency: BRL
+                - conditionType: ZBD2
+                  indicator: M
+                  value: 0
+                  currency: BRL
+                - conditionType: ZBD4
+                  indicator: M
+                  value: 0
+                  currency: BRL
+                - conditionType: ZBD3
+                  indicator: M
+                  value: 0
+                  currency: BRL
+                - conditionType: IBRX
+                  indicator: 'N'
+                  value: 0
+                  totalValue: 15652
+                  currency: BRL
+                - conditionType: IPI3
+                  indicator: O
+                  value: 0
+                  totalValue: 1252.16
+                  currency: BRL
+                - conditionType: ICM3
+                  indicator: P
+                  value: 0
+                  totalValue: 1377.41
+                  currency: BRL
+                - conditionType: ICSP
+                  indicator: Q
+                  value: 0
+                  currency: BRL
+                - conditionType: ICS3
+                  indicator: R
+                  value: 0
+                  totalValue: 839.12
+                  currency: BRL
+                - conditionType: ICFP
+                  indicator: S
+                  value: 0
+                  currency: BRL
+                - conditionType: ZB11
+                  indicator: U
+                  value: 0
+                  totalValue: 17743.28
+                  currency: BRL
+              additionalData:
+                - key: materialGroups
+                  value: '{ "materialGroups":[{"matGroup":"BUY0035991791","fields":[{"field":"MVGR4","value":"VBS"}],"materials":[{"material":"F0129004JU000","unitOfMeasure":"ST","getException":""}]}]}'
+            confirmedAsRequested: false
+            pricingSummary:
+              basePrice: 31841
+              rebates: -16188.99
+              surcharges: 0
+              totalPrice: 15652
+              freightcost: 0
+              VAT: 2091.28
+              totalTax: 3468.69
+              amount: 17743.28
+            pricingExplanation:
+              pricingExplanationLines:
+                - element: LIST_PRICE
+                  value: 31841
+                  unitValue: 0
+                  currency: BRL
+                  sign: '='
+                  indicator: A
+                - element: DISCOUNT_BASE
+                  value: -13691.63
+                  unitValue: 0
+                  currency: BRL
+                  sign: '='
+                  indicator: B
+                - element: DISCOUNT_EXCLUSIVE
+                  value: -362.99
+                  unitValue: 0
+                  currency: BRL
+                  sign: '&'
+                  indicator: C
+                - element: DISCOUNT_PROMO
+                  value: -2134.37
+                  unitValue: 0
+                  currency: BRL
+                  sign: '&'
+                  indicator: E
+                - element: TOTAL_DISCOUNT
+                  value: -16188.99
+                  unitValue: 0
+                  currency: BRL
+                  sign: '&'
+                  indicator: M
+                - element: NET_PRICE
+                  value: 15652
+                  unitValue: 0
+                  currency: BRL
+                  sign: '='
+                  indicator: 'N'
+                - element: IPI
+                  value: 1252.16
+                  unitValue: 0
+                  currency: BRL
+                  sign: +
+                  indicator: O
+                - element: ICMS
+                  value: 1377.41
+                  unitValue: 0
+                  currency: BRL
+                  sign: +
+                  indicator: P
+                - element: ICMS_ST
+                  value: 839.12
+                  unitValue: 0
+                  currency: BRL
+                  sign: +
+                  indicator: R
+                - element: TOTAL_TAXES
+                  value: 3468.69
+                  unitValue: 0
+                  currency: BRL
+                  sign: '&'
+                  indicator: T
+                - element: INVOICE_PRICE
+                  value: 17743.28
+                  unitValue: 0
+                  currency: BRL
+                  sign: '='
+                  indicator: U
+                - element: MVA
+                  value: 839.12
+                  unitValue: 0
+                  currency: BRL
+                  sign: '='
+                  indicator: V
+                - element: '%ST'
+                  value: 839.12
+                  unitValue: 0
+                  currency: BRL
+                  sign: '='
+                  indicator: X
+            shipmentDimension:
+              totalWeight: '277.000 '
+              unitOfWeight: KGM
+              totalVolume: '5172.800 '
+              unitOfVolume: CMQ
+            orderItems:
+              - itemNo: '000001'
+                confirmedAsRequested: false
+                acceptedQuantity: 100
+                confirmedQuantity: 0
+                pricingSummary:
+                  basePrice: 31841
+                  rebates: -16188.99
+                  surcharges: 0
+                  totalPrice: 15652
+                  freightcost: 0
+                  VAT: 2091.28
+                  totalTax: 3468.69
+                  amount: 17743.28
+                pricingExplanation:
+                  pricingExplanationLines:
+                    - element: LIST_PRICE
+                      value: 31841
+                      unitValue: 318.41
+                      currency: BRL
+                      sign: '='
+                      indicator: A
+                    - element: DISCOUNT_BASE
+                      value: -13691.63
+                      unitValue: -43
+                      currency: BRL
+                      sign: '='
+                      indicator: B
+                    - element: DISCOUNT_EXCLUSIVE
+                      value: -362.99
+                      unitValue: -3.63
+                      currency: BRL
+                      sign: '&'
+                      indicator: C
+                    - element: DISCOUNT_PROMO
+                      value: -2134.37
+                      unitValue: -21.344
+                      currency: BRL
+                      sign: '&'
+                      indicator: E
+                    - element: TOTAL_DISCOUNT
+                      value: -16188.99
+                      unitValue: -161.89
+                      currency: BRL
+                      sign: '&'
+                      indicator: M
+                    - element: NET_PRICE
+                      value: 15652
+                      unitValue: 100
+                      currency: BRL
+                      sign: '='
+                      indicator: 'N'
+                    - element: IPI
+                      value: 1252.16
+                      unitValue: 8
+                      currency: BRL
+                      sign: +
+                      indicator: O
+                    - element: ICMS
+                      value: 1377.41
+                      unitValue: 18
+                      currency: BRL
+                      sign: +
+                      indicator: P
+                    - element: ICMS_ST
+                      value: 839.12
+                      unitValue: 18
+                      currency: BRL
+                      sign: +
+                      indicator: R
+                    - element: TOTAL_TAXES
+                      value: 3468.69
+                      unitValue: 34.687
+                      currency: BRL
+                      sign: '&'
+                      indicator: T
+                    - element: INVOICE_PRICE
+                      value: 17743.28
+                      unitValue: 100
+                      currency: BRL
+                      sign: '='
+                      indicator: U
+                    - element: MVA
+                      value: 839.12
+                      unitValue: 49
+                      currency: BRL
+                      sign: '='
+                      indicator: V
+                    - element: '%ST'
+                      value: 839.12
+                      unitValue: 4.964
+                      currency: BRL
+                      sign: '='
+                      indicator: X
+                shipmentDimension:
+                  totalWeight: '277.000 '
+                  unitOfWeight: KGM
+                  totalVolume: '5172.800 '
+                  unitOfVolume: CMQ
+                orderItem:
+                  productId: F012.900.4JU-000
+                  uniqueItemId: 0
+                  materialDescription: ESMERILHADEIRA 220V 9004 +2discos+Bolsa
+                  requestedQuantity: 100
+                  quantityUnit: PCE
+                  conditions:
+                    - conditionType: ZB02
+                      indicator: A
+                      value: 318.41
+                      conditionCurrency: BRL
+                      unit: PCE
+                      scale: 1
+                      scaleUnit: PCE
+                      totalValue: 31841
+                      currency: BRL
+                    - conditionType: ZB66
+                      indicator: M
+                      value: -43
+                      conditionCurrency: PCT
+                      totalValue: -13691.63
+                      currency: BRL
+                    - conditionType: ZBCP
+                      indicator: M
+                      value: -2
+                      conditionCurrency: PCT
+                      totalValue: -362.99
+                      currency: BRL
+                    - conditionType: ZBB5
+                      indicator: M
+                      value: -12
+                      conditionCurrency: PCT
+                      totalValue: -2134.37
+                      currency: BRL
+                    - conditionType: ZBAW
+                      indicator: M
+                      value: 0
+                      conditionCurrency: PCT
+                      currency: BRL
+                    - conditionType: ZBAY
+                      indicator: M
+                      value: 0
+                      conditionCurrency: PCT
+                      currency: BRL
+                    - conditionType: ZBAS
+                      indicator: M
+                      value: 0
+                      conditionCurrency: BRL
+                      currency: BRL
+                    - conditionType: DiscountController
+                      indicator: M
+                      value: 0
+                      conditionCurrency: PCT
+                      currency: BRL
+                    - conditionType: DiscountManager
+                      indicator: M
+                      value: 0
+                      conditionCurrency: PCT
+                      currency: BRL
+                    - conditionType: DiscountCoordinator
+                      indicator: M
+                      value: 0
+                      conditionCurrency: PCT
+                      currency: BRL
+                    - conditionType: IBRX
+                      indicator: 'N'
+                      value: 100
+                      conditionCurrency: PCT
+                      totalValue: 15652
+                      currency: BRL
+                    - conditionType: IPI3
+                      indicator: O
+                      value: 8
+                      conditionCurrency: PCT
+                      totalValue: 1252.16
+                      currency: BRL
+                    - conditionType: ICM3
+                      indicator: P
+                      value: 18
+                      conditionCurrency: PCT
+                      totalValue: 1377.41
+                      currency: BRL
+                    - conditionType: ICSP
+                      indicator: Q
+                      value: 0
+                      conditionCurrency: PCT
+                      currency: BRL
+                    - conditionType: ICS3
+                      indicator: R
+                      value: 18
+                      conditionCurrency: PCT
+                      totalValue: 839.12
+                      currency: BRL
+                    - conditionType: ICFP
+                      indicator: S
+                      value: 0
+                      conditionCurrency: PCT
+                      currency: BRL
+                    - conditionType: ZB11
+                      indicator: U
+                      value: 100
+                      conditionCurrency: PCT
+                      totalValue: 17743.28
+                      currency: BRL
+                    - conditionType: MVA
+                      indicator: V
+                      value: 49
+                      conditionCurrency: PCT
+                      totalValue: 839.12
+                      currency: BRL
+                    - conditionType: '%ST'
+                      indicator: X
+                      value: 4.964
+                      conditionCurrency: PCT
+                      totalValue: 839.12
+                      currency: BRL
+                  additionalData:
+                    - key: plantID
+                      value: W275
+                    - key: promotions
+                      value: '{ "promotions":[{"storeId":"PTBR_STORE","customer":"","material":"F012.900.4JU-000","promoNo":"35991791","validFrom":"2019-09-23","validTo":"9999-12-31","text":"ZBB5 -Desc. Escala em Qtd.","conditionType":"ZBB5","currency":"","get":[{"promoNo":"35991791","getType":"M","bonusType":"%","material":"F012.900.4JU-000","matGroup":"","quantity":1.000,"quantityUom":"PCE","value":-8.000,"valueCurrency":"","koein":"","scaleBasis":"C","granted":false,"buy":[{"promoNo":"35991791","buyType":"G","material":"","matGroup":"BUY0035991791","quantityFrom":10.000,"quantityTo":19.000,"quantityUom":"PCE","valueFrom":0,"valueTo":0,"valueCurrency":""}]},{"promoNo":"35991791","getType":"M","bonusType":"%","material":"F012.900.4JU-000","matGroup":"","quantity":1.000,"quantityUom":"PCE","value":-12.000,"valueCurrency":"","koein":"","scaleBasis":"C","granted":true,"buy":[{"promoNo":"35991791","buyType":"G","material":"","matGroup":"BUY0035991791","quantityFrom":20.000,"quantityTo":999999999999.000,"quantityUom":"PCE","valueFrom":0,"valueTo":0,"valueCurrency":""}]}]}]}'
+                productRequested: F012.900.4JU-000
+            errorMessages:
+              - code: 1001
+                severity: W
+                text: Credit block
+                isExternalCode: true
