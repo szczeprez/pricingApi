@@ -981,6 +981,8 @@ components:
                 minLength: 1
               testEOne:
                 type: string
+              testTwo:
+                type: string
             required:
               - id
               - title
