@@ -21,12 +21,31 @@ paths:
                 properties:
                   orderSimulated:
                     type: object
+                    required:
+                      - requestId
+                      - orderHeader
+                      - confirmedAsRequested
+                      - pricingSummary
+                      - pricingExplanation
+                      - shipmentDimension
+                      - orderItems
+                      - errorMessages
                     properties:
                       requestId:
                         type: string
                         minLength: 1
                       orderHeader:
                         type: object
+                        required:
+                          - customerId
+                          - purchaseOrderNo
+                          - currency
+                          - requestedDate
+                          - paymentTerm
+                          - completeDelivery
+                          - partnerz
+                          - conditions
+                          - additionalData
                         properties:
                           customerId:
                             type: number
@@ -44,13 +63,12 @@ paths:
                             minLength: 1
                           completeDelivery:
                             type: boolean
-                          partners:
+                          partnerz:
                             type: array
                             uniqueItems: true
                             minItems: 1
                             items:
-                              required:
-                                - function
+                              type: object
                               properties:
                                 function:
                                   type: string
@@ -62,20 +80,14 @@ paths:
                                       type: number
                                   required:
                                     - partnerId
+                              required:
+                                - function
                           conditions:
                             type: array
                             uniqueItems: true
                             minItems: 1
                             items:
-                              required:
-                                - conditionType
-                                - indicator
-                                - value
-                                - unit
-                                - scale
-                                - scaleUnit
-                                - totalValue
-                                - currency
+                              type: object
                               properties:
                                 conditionType:
                                   type: string
@@ -98,14 +110,21 @@ paths:
                                 currency:
                                   type: string
                                   minLength: 1
+                              required:
+                                - conditionType
+                                - indicator
+                                - value
+                                - unit
+                                - scale
+                                - scaleUnit
+                                - totalValue
+                                - currency
                           additionalData:
                             type: array
                             uniqueItems: true
                             minItems: 1
                             items:
-                              required:
-                                - key
-                                - value
+                              type: object
                               properties:
                                 key:
                                   type: string
@@ -113,20 +132,22 @@ paths:
                                 value:
                                   type: string
                                   minLength: 1
-                        required:
-                          - customerId
-                          - purchaseOrderNo
-                          - currency
-                          - requestedDate
-                          - paymentTerm
-                          - completeDelivery
-                          - partners
-                          - conditions
-                          - additionalData
+                              required:
+                                - key
+                                - value
                       confirmedAsRequested:
                         type: boolean
                       pricingSummary:
                         type: object
+                        required:
+                          - basePrice
+                          - rebates
+                          - surcharges
+                          - totalPrice
+                          - freightcost
+                          - VAT
+                          - totalTax
+                          - amount
                         properties:
                           basePrice:
                             type: number
@@ -144,30 +165,17 @@ paths:
                             type: number
                           amount:
                             type: number
-                        required:
-                          - basePrice
-                          - rebates
-                          - surcharges
-                          - totalPrice
-                          - freightcost
-                          - VAT
-                          - totalTax
-                          - amount
                       pricingExplanation:
                         type: object
+                        required:
+                          - pricingExplanationLines
                         properties:
                           pricingExplanationLines:
                             type: array
                             uniqueItems: true
                             minItems: 1
                             items:
-                              required:
-                                - element
-                                - value
-                                - unitValue
-                                - currency
-                                - sign
-                                - indicator
+                              type: object
                               properties:
                                 element:
                                   type: string
@@ -185,10 +193,20 @@ paths:
                                 indicator:
                                   type: string
                                   minLength: 1
-                        required:
-                          - pricingExplanationLines
+                              required:
+                                - element
+                                - value
+                                - unitValue
+                                - currency
+                                - sign
+                                - indicator
                       shipmentDimension:
                         type: object
+                        required:
+                          - totalWeight
+                          - unitOfWeight
+                          - totalVolume
+                          - unitOfVolume
                         properties:
                           totalWeight:
                             type: string
@@ -202,22 +220,12 @@ paths:
                           unitOfVolume:
                             type: string
                             minLength: 1
-                        required:
-                          - totalWeight
-                          - unitOfWeight
-                          - totalVolume
-                          - unitOfVolume
                       orderItems:
                         type: array
                         uniqueItems: true
                         minItems: 1
                         items:
-                          required:
-                            - itemNo
-                            - confirmedAsRequested
-                            - acceptedQuantity
-                            - confirmedQuantity
-                            - productRequested
+                          type: object
                           properties:
                             itemNo:
                               type: string
@@ -264,13 +272,7 @@ paths:
                                   uniqueItems: true
                                   minItems: 1
                                   items:
-                                    required:
-                                      - element
-                                      - value
-                                      - unitValue
-                                      - currency
-                                      - sign
-                                      - indicator
+                                    type: object
                                     properties:
                                       element:
                                         type: string
@@ -288,6 +290,13 @@ paths:
                                       indicator:
                                         type: string
                                         minLength: 1
+                                    required:
+                                      - element
+                                      - value
+                                      - unitValue
+                                      - currency
+                                      - sign
+                                      - indicator
                               required:
                                 - pricingExplanationLines
                             shipmentDimension:
@@ -331,16 +340,7 @@ paths:
                                   uniqueItems: true
                                   minItems: 1
                                   items:
-                                    required:
-                                      - conditionType
-                                      - indicator
-                                      - value
-                                      - conditionCurrency
-                                      - unit
-                                      - scale
-                                      - scaleUnit
-                                      - totalValue
-                                      - currency
+                                    type: object
                                     properties:
                                       conditionType:
                                         type: string
@@ -366,14 +366,22 @@ paths:
                                       currency:
                                         type: string
                                         minLength: 1
+                                    required:
+                                      - conditionType
+                                      - indicator
+                                      - value
+                                      - conditionCurrency
+                                      - unit
+                                      - scale
+                                      - scaleUnit
+                                      - totalValue
+                                      - currency
                                 additionalData:
                                   type: array
                                   uniqueItems: true
                                   minItems: 1
                                   items:
-                                    required:
-                                      - key
-                                      - value
+                                    type: object
                                     properties:
                                       key:
                                         type: string
@@ -381,6 +389,9 @@ paths:
                                       value:
                                         type: string
                                         minLength: 1
+                                    required:
+                                      - key
+                                      - value
                               required:
                                 - productId
                                 - uniqueItemId
@@ -392,16 +403,18 @@ paths:
                             productRequested:
                               type: string
                               minLength: 1
+                          required:
+                            - itemNo
+                            - confirmedAsRequested
+                            - acceptedQuantity
+                            - confirmedQuantity
+                            - productRequested
                       errorMessages:
                         type: array
                         uniqueItems: true
                         minItems: 1
                         items:
-                          required:
-                            - code
-                            - severity
-                            - text
-                            - isExternalCode
+                          type: object
                           properties:
                             code:
                               type: number
@@ -413,15 +426,11 @@ paths:
                               minLength: 1
                             isExternalCode:
                               type: boolean
-                    required:
-                      - requestId
-                      - orderHeader
-                      - confirmedAsRequested
-                      - pricingSummary
-                      - pricingExplanation
-                      - shipmentDimension
-                      - orderItems
-                      - errorMessages
+                          required:
+                            - code
+                            - severity
+                            - text
+                            - isExternalCode
                 required:
                   - orderSimulated
               examples:
