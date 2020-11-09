@@ -43,7 +43,7 @@ paths:
                           - requestedDate
                           - paymentTerm
                           - completeDelivery
-                          - partnerz
+                          - partners
                           - conditions
                           - additionalData
                         properties:
@@ -63,7 +63,7 @@ paths:
                             minLength: 1
                           completeDelivery:
                             type: boolean
-                          partnerz:
+                          partners:
                             type: array
                             uniqueItems: true
                             minItems: 1
